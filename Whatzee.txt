@@ -1,0 +1,1759 @@
+package cyndisgames;
+import java.util.Random;
+import java.util.Scanner;
+//TODO Add logic to handle setting forfeits by choice or by necessity
+
+public class Whatzee{
+	
+	/*Variables*/
+	Scanner input = new Scanner(System.in);
+	Random dice = new Random();
+	int[] roll = new int[5];
+	int[] finalDice = new int[5];
+	int[] sortedDice = new int[5];
+	String[] applications = {"Aces", "Twos", "Threes", "Fours", "Fives", "Sixes",
+                           "Three-of-a-Kind", "Four-of-a-Kind", "Full House",
+                           "Small Straight", "Large Straight", "Whatzee", "Chance", "Forfeit"};
+	
+	/*reset*/
+	char wannaRoll = 'N';
+	char keepAll = 'N';
+	char keepDie = 'N';
+	char areYouSure = 'N';
+	char confirmChoice = 'N';
+	
+	/*Don't reset*/
+	int turns = 0;
+	int numRolls = 0;
+	int forfeitIndex = 0;
+
+	/*reset*/
+	int dieNumber = 0;
+	int A, B, C, D, E;
+	int XA, XB, XC, XD, XE;
+	int KA, KB, KC, KD, KE;
+	
+	//Evaluation variables
+	/*reset*/
+	int ones = 0;
+	int twos = 0;
+	int threes = 0;
+	int fours = 0;
+	int fives = 0;
+	int sixes = 0;
+	int potentialScore = 0;
+	int choices = 0;
+	int choice;
+	
+	/*Don't reset*/
+	int aceScore = 0 //0
+	, twoScore = 0 //1
+	, threeScore = 0 //2
+	, fourScore = 0 //3
+	, fiveScore = 0 //4
+	, sixScore = 0 //5
+	, tokScore = 0 //6
+	, fokScore = 0 //7
+	, fhScore = 0 //8
+	, smStraightScore = 0 //9
+	, lgStraightScore = 0 //10
+	, whatzeeScore = 0 //11
+	, chanceScore = 0 //12
+	, whatzeeBonus = 0 //Not in array
+	, jokerScore = 0 //Not in array
+	;
+	int upperScore = 0, upperBonus = 0, upperTotal = upperScore + upperBonus
+			, lowerTotal = 0, totalScore = upperTotal + lowerTotal;
+	int groups[] = new int[6];
+	
+	int staticFHScore = 25;
+	int staticSmStraightScore = 30;
+	int staticLgStraightScore = 40;
+	int staticWhatzeeScore = 50;
+	int staticWhatzeeBonus = 100;
+	int staticUpperBonus = 35;
+	
+	boolean forfeit0 = false; //aceScore
+	boolean forfeit1 = false; //twoScore
+	boolean forfeit2 = false; //threeScore
+	boolean forfeit3 = false; //fourScore
+	boolean forfeit4 = false; //fiveScore
+	boolean forfeit5 = false; //sixScore
+	boolean forfeit6 = false; //tokScore
+	boolean forfeit7 = false; //fokScore
+	boolean forfeit8 = false; //fhScore
+	boolean forfeit9 = false; //smStraightScore
+	boolean forfeit10 = false; //lgStraightScore
+	boolean forfeit11 = false; //whatzeeScore
+	boolean forfeit12 = false; //chanceScore
+	
+	
+	public Whatzee()
+	{
+		System.out.println("");
+		System.out.println("Welcome to Whatzee!");
+		System.out.println("");
+		System.out.println("If at any time you are asked a Yes or No question and you ");
+		System.out.println("do not type a 'y' or a 'Y', it will be considered an 'N'");
+		
+		/*Set numrolls = 0*/
+		numRolls = 0;
+		/*Variables*/
+		Scanner input = new Scanner(System.in);
+		Random dice = new Random();
+		int[] roll = new int[5];
+		int[] finalDice = new int[5];
+		int[] sortedDice = new int[5];
+		String[] applications = {"Aces", "Twos", "Threes", "Fours", "Fives", "Sixes",
+	                           "Three-of-a-Kind", "Four-of-a-Kind", "Full House",
+	                           "Small Straight", "Large Straight", "Whatzee", "Chance", "Forfeit"};
+		
+		/*reset*/
+		char wannaRoll = 'N';
+		char keepAll = 'N';
+		char keepDie = 'N';
+		char areYouSure = 'N';
+		char confirmChoice = 'N';
+		
+		/*Don't reset*/
+		int turns = 0;
+		int numRolls = 0;
+		int forfeitIndex = 0;
+
+		/*reset*/
+		int dieNumber = 0;
+		int A, B, C, D, E;
+		int XA, XB, XC, XD, XE;
+		int KA, KB, KC, KD, KE;
+		
+		//Evaluation variables
+		/*reset*/
+		int ones = 0;
+		int twos = 0;
+		int threes = 0;
+		int fours = 0;
+		int fives = 0;
+		int sixes = 0;
+		int potentialScore = 0;
+		int choices = 0;
+		int choice;
+		
+		/*Don't reset*/
+		int aceScore = 0 //0
+		, twoScore = 0 //1
+		, threeScore = 0 //2
+		, fourScore = 0 //3
+		, fiveScore = 0 //4
+		, sixScore = 0 //5
+		, tokScore = 0 //6
+		, fokScore = 0 //7
+		, fhScore = 0 //8
+		, smStraightScore = 0 //9
+		, lgStraightScore = 0 //10
+		, whatzeeScore = 0 //11
+		, chanceScore = 0 //12
+		, whatzeeBonus = 0 //Not in array
+		, jokerScore = 0 //Not in array
+		;
+		int upperScore = 0, upperBonus = 0, upperTotal = upperScore + upperBonus
+				, lowerTotal = 0, totalScore = upperTotal + lowerTotal;
+		int groups[] = new int[6];
+		
+		int staticFHScore = 25;
+		int staticSmStraightScore = 30;
+		int staticLgStraightScore = 40;
+		int staticWhatzeeScore = 50;
+		int staticWhatzeeBonus = 100;
+		int staticUpperBonus = 35;
+		
+		boolean forfeit0 = false; //aceScore
+		boolean forfeit1 = false; //twoScore
+		boolean forfeit2 = false; //threeScore
+		boolean forfeit3 = false; //fourScore
+		boolean forfeit4 = false; //fiveScore
+		boolean forfeit5 = false; //sixScore
+		boolean forfeit6 = false; //tokScore
+		boolean forfeit7 = false; //fokScore
+		boolean forfeit8 = false; //fhScore
+		boolean forfeit9 = false; //smStraightScore
+		boolean forfeit10 = false; //lgStraightScore
+		boolean forfeit11 = false; //whatzeeScore
+		boolean forfeit12 = false; //chanceScore
+		
+		
+		
+		if(wannaRoll())
+		{
+			rollDice();
+		}
+		else
+		{
+			games.selectGame();
+		}
+		
+		
+	}
+
+
+	private void rollDice() {
+		
+		numRolls += 1;
+		if(numRolls == 1)
+		{
+			turns +=1;
+			System.out.println("");
+			System.out.println("TURN: " + turns);
+		}
+		
+		/*Get 5 random numbers between 1 and 6 and assign to an array*/
+		for(int i = 0; i < 5; i++)
+		{
+			dieNumber = 1 + dice.nextInt(6);
+			roll[i] = dieNumber;
+		}
+		
+		assignRolltoInitialVariables();
+	
+		System.out.println("");
+		System.out.println("ROLL NUMBER: " + numRolls);
+		
+		if(numRolls < 3)
+		{
+			showScores();
+			showDice();
+		}
+		else
+		{
+			assignFinalRollToArray();
+			showScores();
+			showFinalDice();
+		}
+
+	}
+
+	private void showScores() {
+
+			System.out.println("");
+			System.out.println("SCORE SHEET");
+			System.out.println("--------------------------------------------------------");
+
+			System.out.println("UPPER SECTION");
+			if(forfeit0 == false)
+				System.out.print("Ones: " + aceScore + " / ");
+			else
+				System.out.print("Ones: X / ");
+			if(forfeit1 == false)
+				System.out.print("Twos: " + twoScore + " / ");
+			else
+				System.out.print("Twos: X / ");
+			if(forfeit2 == false)
+				System.out.print("Threes : " + threeScore + " / ");
+			else
+				System.out.print("Threes: X / ");
+			if(forfeit3 == false)
+				System.out.print("Fours: " + fourScore + " / ");
+			else
+				System.out.print("Fours: X / ");
+			if(forfeit4 == false)
+				System.out.print("Fives: " + fiveScore + " / ");
+			else
+				System.out.print("Fives: X / ");
+			if(forfeit5 == false)
+				System.out.println("Sixes: " + sixScore);
+			else
+				System.out.println("Sixes: X");
+			
+			System.out.println("");
+			System.out.println("LOWER SECTION");
+			if(forfeit6 == false)
+				System.out.print("3-of-a-Kind: " + tokScore + " / ");
+			else
+				System.out.print("3-of-a-Kind: X / ");
+			if(forfeit7 == false)
+				System.out.print("4-of-a-Kind: " + fokScore + " / ");
+			else
+				System.out.print("4-of-a-Kind: X / ");
+			if(forfeit8 == false)
+				System.out.println("Full House : " + fhScore);
+			else
+				System.out.println("Full House: X");
+			if(forfeit9 == false)
+				System.out.print("Small Straight: " + smStraightScore + " / ");
+			else
+				System.out.print("Small Straight: X / ");
+			if(forfeit10 == false)
+				System.out.print("Large Straight: " + lgStraightScore + " / ");
+			else
+				System.out.print("Large Straight: X / ");
+			if(forfeit11 == false)
+				System.out.print("Whatzee: " + whatzeeScore + " / ");
+			else
+				System.out.print("Whatzee: X / ");
+			if(forfeit12 == false)
+				System.out.println("Chance: " + chanceScore);
+			else
+				System.out.println("Chance: X");
+			
+			if(upperScore >= 63)
+			{
+				upperBonus = staticUpperBonus;
+			}
+			
+			System.out.println("");
+			System.out.println("TOTALS");
+			System.out.println("-----------------");
+			System.out.println("Upper Score = " + upperScore);
+			System.out.println("Upper Bonus = " + upperBonus);
+			System.out.println("Lower total = " + lowerTotal);
+			System.out.println("=================");
+			System.out.println("TOTAL SCORE: = " + totalScore);
+				
+		
+	}
+
+
+	private void assignFinalRollToArray() {
+		//Assign final dice roll to k variables
+		if(KA == 0)
+		{
+			finalDice[0] = roll[0];
+		}
+		else
+		{
+			finalDice[0] = KA;
+		}
+		if(KB == 0)
+		{
+			finalDice[1] = roll[1];
+		}
+		else
+		{
+			finalDice[1] = KB;
+		}
+		if(KC == 0)
+		{
+			finalDice[2] = roll[2];
+		}
+		else
+		{
+			finalDice[2] = KC;
+		}
+		if(KD == 0)
+		{
+			finalDice[3] = roll[3];
+		}
+		else
+		{
+			finalDice[3] = KD;
+		}
+		if(KE == 0)
+		{
+			finalDice[4] = roll[4];
+		}
+		else
+		{
+			finalDice[4] = KE;
+		}
+		
+	}
+
+
+	private void assignRolltoInitialVariables() {
+		//Assign to die variables A-E
+		if(KA == 0)
+		{
+			A = roll[0];
+		}
+		else
+		{
+			A = KA;
+		}
+		if(KB == 0)
+		{
+			B = roll[1];
+		}
+		else
+		{
+			B = KB;
+		}
+		if(KC == 0)
+		{
+			C = roll[2];
+		}
+		else
+		{
+			C = KC;
+		}
+		if(KD == 0)
+		{
+			D = roll[3];
+		}
+		else
+		{
+			D = KD;
+		}
+		if(KE == 0)
+		{
+			E = roll[4];
+		}
+		else
+		{
+			E = KE;
+		}
+		
+	}
+
+
+	private void showDice() 
+	{
+		
+		if(numRolls < 3)
+		{
+			if(wannaKeepAll())
+			{
+				if(confirmKeepAll())
+				{
+					assignRollToKs();
+					numRolls = 3;
+					showFinalDice();
+				}
+				else
+				{
+					showDice();
+				}
+			}
+			else
+			{
+				chooseKeepers();
+			}
+		}
+		else
+		{
+			showFinalDice();
+		}
+	}
+
+
+	private boolean confirmKeepAll() {
+		// TODO Auto-generated method stub
+		System.out.println("");
+		System.out.println("Are you sure you want to keep all your dice?");
+		confirmChoice = Character.toUpperCase(input.next().charAt(0)); 
+		if(confirmChoice == 'Y')
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+
+
+	private void assignRollToKs() {
+		//Assign to die roll to K variables
+		if(KA == 0)
+		{
+			KA = A;
+		}
+		if(KB == 0)
+		{
+			KB = B;
+		}
+		if(KC == 0)
+		{
+			KC = C;
+		}
+		if(KD == 0)
+		{
+			KD = D;
+		}
+		if(KE == 0)
+		{
+			KE = E;
+		}
+		
+	}
+
+
+/*	private void assignToKeepers()
+	{
+		KA = A;
+		KB = B;
+		KC = C;
+		KD = D;
+		KE = E;
+	}*/
+	
+	private void showFinalDice() 
+	{
+		
+		if(numRolls < 3)
+		{
+			System.out.println("");
+			System.out.println("Here are your dice:");
+			System.out.println("");
+			if(KA > 0) System.out.print(KA + "\t" );
+			if(KB > 0) System.out.print (KB+ "\t" );
+			if(KC > 0) System.out.print (KC + "\t" );
+			if(KD > 0) System.out.print (KD+ "\t" );
+			if(KE > 0) System.out.print (KE);
+			if(wannaRoll == 'Y')
+			{
+			rollDice();
+			}
+		}
+		else
+		{
+			assignFinalRollToArray();
+/*			System.out.println("");
+			System.out.println("Here are your final dice");
+			System.out.println("");*/
+			for(int i = 0; i < 5; i++)
+			{
+				System.out.print(finalDice[i] + "\t");
+			}
+
+			System.out.println("");
+			groupFinalDice();
+			selectApplyFinalDice();
+		}
+
+	}
+
+
+	private void selectApplyFinalDice() {
+
+		System.out.println("");
+		System.out.println("How do you want to apply your dice (Y/N)?");
+		System.out.println("");
+		System.out.println("Enter the value from the ENTER column to make your choice");
+		System.out.println("");
+		
+		System.out.println("ENTER\tAPPLY TO\t\tSCORE");
+		System.out.println("---------------------------------------");
+		
+		if(aceScore == 0 && forfeit0 == false)
+		{
+			if(groups[0] > 0)
+			{
+				potentialScore = groups[0] * 1;
+				System.out.println("0\t" + applications[0] + "\t\t\t" + potentialScore);
+			}
+		}
+		
+		if(twoScore == 0 && forfeit1 == false)
+		{
+			if(groups[1] > 0)
+			{
+				potentialScore = groups[1] * 2;
+				System.out.println("1\t" + applications[1] + "\t\t\t" + potentialScore);
+			}
+		}
+		
+		if(threeScore == 0 && forfeit2 == false)
+		{
+			if(groups[2] > 0)
+			{
+				potentialScore = groups[2] * 3;
+				System.out.println("2\t" + applications[2] + "\t\t\t" + potentialScore);
+			}
+		}
+		
+		if(fourScore == 0 && forfeit3 == false)
+		{
+			if(groups[3] > 0)
+			{
+				potentialScore = groups[3] * 4;
+				System.out.println("3\t" + applications[3] + "\t\t\t" + potentialScore);
+			}
+		}
+		
+		if(fiveScore == 0 && forfeit4 == false)
+		{
+			if(groups[4] > 0)
+			{
+				potentialScore = groups[4] * 5;
+				System.out.println("4\t" + applications[4] + "\t\t\t" + potentialScore);
+			}
+		}
+		
+		if(sixScore == 0 && forfeit5 == false)
+		{
+			if(groups[5] > 0)
+			{
+				potentialScore = groups[5] * 6;
+				System.out.println("5\t" + applications[5] + "\t\t\t" + potentialScore);
+			}
+		}
+		
+		if(tokScore == 0 && forfeit6 == false)
+		{
+			if(isThreeOfAKind())
+			{
+				potentialScore = calcAll();
+				System.out.println("6\t" + applications[6] + "\t\t" + potentialScore);
+			}
+		}
+		
+		if(fokScore == 0 && forfeit7 == false)
+		{
+			if(isFourOfAKind())
+			{
+				potentialScore = calcAll();
+				System.out.println("7\t" + applications[7] + "\t\t" + potentialScore);
+			}
+		}
+		
+		if(fhScore == 0 && forfeit8 == false)
+		{
+		if(isFullHouse())
+			{
+				potentialScore = staticFHScore;
+				System.out.println("8\t" + applications[8] + "\t\t" + potentialScore);
+			}
+		}
+		
+		if(smStraightScore == 0 && forfeit9 == false)
+		{
+			if(isSmStraight())
+			{
+				potentialScore = staticSmStraightScore;
+				System.out.println("9\t" + applications[9] + "\t\t" + potentialScore);
+			}
+		}
+		
+		if(lgStraightScore == 0 && forfeit10 == false)
+		{
+			if(isLgStraight())
+			{
+				potentialScore = staticLgStraightScore;
+				System.out.println("10\t" + applications[10] + "\t\t"  + potentialScore);
+			}
+		}
+		
+
+		if(isWhatzee() && forfeit11 == false)
+		{
+			if(whatzeeScore == 0)
+			{
+				potentialScore = staticWhatzeeScore;
+				System.out.println("11\t" + applications[11] + "\t\t" + potentialScore);
+			}
+			else if(whatzeeScore >= staticWhatzeeScore)
+			{
+				potentialScore = staticWhatzeeBonus;
+				System.out.println("11\t" + applications[11] + "\t\t" + potentialScore);
+			}
+			
+		}
+		else if(isWhatzee() && forfeit11 == true)
+		{
+			System.out.println("14\t\"Whatzee/Joker \t TBD\t\t ");
+		}
+
+		
+		if(chanceScore == 0)
+		{
+			potentialScore = calcAll();
+			System.out.println("12\t" + applications[12] + "\t\t\t" + potentialScore);
+		}
+		
+		System.out.println("13\tForfeit Score\t\t0");
+		
+		if(nothingLeftToForfeit())
+		{
+			endGame();
+		}
+		else
+		{
+		
+			choice = input.nextInt();
+			
+			if(choice == 13)
+			{
+				selectScoreToForfeit();
+			}
+			else if(choice < 0 || choice > 13)
+			{
+				selectApplyFinalDice();
+			}
+			else
+			{
+				verifyApplicationChoice();
+			}
+		}
+		
+	}
+
+
+	private boolean nothingLeftToForfeit() {
+		// TODO Auto-generated method stub
+		if(aceScore > 0 || forfeit0 == true)
+		{
+			if(twoScore > 0 || forfeit1 == true)
+			{
+				if(threeScore > 0 || forfeit2 == true)
+				{
+					if(fourScore > 0 || forfeit3 == true)
+					{
+						if(fiveScore > 0 || forfeit4 == true)
+						{
+							if(sixScore > 0 || forfeit5 == true)
+							{
+								if(tokScore > 0 || forfeit6 == true)
+								{
+									if(fokScore > 0 || forfeit7 == true)
+									{
+										if(fhScore > 0 || forfeit8 == true)
+										{
+											if(smStraightScore > 0 || forfeit9 == true)
+											{
+												if(lgStraightScore > 0 || forfeit10 == true)
+												{
+													if(whatzeeScore > 0 || forfeit11 == true)
+													{
+														if(chanceScore > 0)
+														return true;
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+
+	private boolean choiceValid() {
+		// TODO Auto-generated method stub
+		
+		if(choice >= 0 || choice <= 12)
+		{
+			switch(choice)
+			{
+			case 0: if(forfeit0 == false)
+						return true;
+					else
+						return false;
+			case 1: if(forfeit1 == false)
+				return true;
+			else
+				return false;
+			case 2: if(forfeit2 == false)
+				return true;
+			else
+				return false;
+			case 3: if(forfeit3 == false)
+				return true;
+			else
+				return false;
+			case 4: if(forfeit4 == false)
+				return true;
+			else
+				return false;
+			case 5: if(forfeit5 == false)
+				return true;
+			else
+				return false;
+			case 6: if(forfeit6 == false)
+				return true;
+			else
+				return false;
+			case 7: if(forfeit7 == false)
+				return true;
+			else
+				return false;
+			case 8: if(forfeit8 == false)
+				return true;
+			else
+				return false;
+			case 9: if(forfeit9 == false)
+				return true;
+			else
+				return false;
+			case 10: if(forfeit10 == false)
+				return true;
+			else
+				return false;
+			case 11: if(forfeit11 == false)
+				return true;
+			else
+				return false;
+			case 12: if(forfeit12 == false)
+				return true;
+			else
+				return false;
+			}
+		}
+		else if(choice >= 0 && choice <= 13)
+			return true;
+		
+		return false;
+		
+	}
+
+
+	private void whereToApplyJoker() {
+
+		int valueOfEachDie = finalDice[0];
+		
+		if(aceScore != 0 && twoScore != 0 && threeScore != 0 && fourScore != 0 && fiveScore != 0 && sixScore != 0)
+		{
+			System.out.println("All upper section values are populated; you cannot apply your Joker score anywhere."); 
+		}
+		else 
+		{
+			System.out.println("Because you cannot apply your Joker score to the " + applications[valueOfEachDie]
+					+ " category, you must select an upper category to score as 0 (zero).");
+			
+			System.out.println("Enter the numeric value of one of the catagories below score as 0");
+			if(aceScore == 0)
+			{
+				System.out.println("1 - Ones");
+			}
+			if(twoScore == 0)
+			{
+				System.out.println("2 - Twos");
+			}
+			if(threeScore == 0)
+			{
+				System.out.println("3 - Threes");
+			}
+			if(fourScore == 0)
+			{
+				System.out.println("4 - fours");
+			}
+			if(fiveScore == 0)
+			{
+				System.out.println("5 - fives");
+			}
+			if(sixScore == 0)
+			{
+				System.out.println("6 - sixes");
+			}
+			
+			if(aceScore > 0
+				&& twoScore > 0
+				&& threeScore > 0
+				&& fourScore > 0
+				&& fiveScore > 0
+				&& sixScore > 0
+				)
+			{
+				System.out.println("You cannot apply your joker to any of the upper scores");
+				System.out.println("You will have to forfeit one of your other scores");
+				selectScoreToForfeit();
+			}
+			
+			
+			
+		
+		}
+/*		}
+		
+								+ " category, you must select one of the other upper categores to score as 0 (zero)");*/
+		
+	}
+
+
+	private boolean verifyForfeit() {
+
+		System.out.println("");
+		System.out.println("Are you sure you want to score " + applications[choice] + " as 0 (Y/N)?");
+		System.out.println("");
+		
+		confirmChoice = Character.toUpperCase(input.next().charAt(0));
+		
+		if(confirmChoice == 'Y')
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+
+
+	private void selectApplyJoker() {
+		System.out.println("");
+		System.out.println("Please select a value in the ENTER column to apply a Joker score");
+		System.out.println("");
+		
+		if((tokScore > 0 || forfeit6 == true)
+		   && (fokScore > 0 || forfeit7 == true)
+		   && (fhScore > 0 || forfeit8 == true)
+		   && (smStraightScore > 0 || forfeit9 == true)
+		   && (lgStraightScore > 0 || forfeit10 == true)
+		   && (chanceScore > 0))
+		{
+			//Apply to upper section
+			if(aceScore == 0 && forfeit0 == false && finalDice[0] == 1)
+			{
+				System.out.println(applications[0] + "\t " + calcAll() + "\t " + 0);
+			}
+			if(twoScore == 0 && forfeit1 == false && finalDice[0] == 2)
+			{
+				System.out.println(applications[1] + "\t " + calcAll() + "\t " + 1);
+			}
+			if(threeScore == 0 && forfeit2 == false && finalDice[0] == 3)
+			{
+				System.out.println(applications[2] + "\t " + calcAll() + "\t " + 2);
+			}
+			if(fourScore == 0 && forfeit3 == false && finalDice[0] == 4)
+			{
+				System.out.println(applications[3] + "\t " + calcAll() + "\t " + 3);
+			}
+			if(fiveScore == 0 && forfeit4 == false && finalDice[0] == 5)
+			{
+				System.out.println(applications[4] + "\t " + calcAll() + "\t " + 4);
+			}
+			if(sixScore == 0 && forfeit5 == false && finalDice[0] == 5)
+			{
+				System.out.println(applications[5] + "\t " + calcAll() + "\t " + 5);
+			}
+		}
+		else
+		{
+			//Apply to lower section
+			if(tokScore == 0 && forfeit6 == false)
+			{
+				System.out.println(applications[6] + "\t " + calcAll() + "\t " + 6);
+			}
+			
+			if(fokScore == 0 && forfeit7 == false)
+			{
+				System.out.println(applications[7] + "\t " + calcAll() + "\t " + 7);
+			}
+			
+			if(fhScore == 0 && forfeit8 == false)
+			{
+					System.out.println(applications[8] + "\t " + staticFHScore + "\t " + 8);
+			}
+			
+			if(smStraightScore == 0 && forfeit9 == false)
+			{
+					System.out.println(applications[9] + "\t" + staticSmStraightScore + "\t" + 9);
+			}
+			
+			if(lgStraightScore == 0 && forfeit10 == false)
+			{
+					System.out.println(applications[10] + "\t" + staticLgStraightScore + "\t" + 10);
+			}
+			
+			if(chanceScore == 0)
+			{
+				System.out.println(applications[12] + "\t\t " + calcAll() + "\t" + 12);
+			}
+			
+		}
+		
+		choice = input.nextInt();
+		verifyJokerChoice();
+
+	}
+
+
+	private void verifyJokerChoice() {
+		System.out.println("");
+		System.out.println("You entered " + choice);
+		System.out.println("Do you want to apply your Joker score to " + applications[choice] + " (Y/N)?");
+		System.out.println("(IMPORTANT: THIS CANNOT BE UNDONE!");
+		System.out.println("");
+		
+		confirmChoice = Character.toUpperCase(input.next().charAt(0));
+		
+		if(confirmChoice == 'Y')
+		{
+			switch(choice)
+			{
+			case 0: aceScore = calcAll();
+			break;
+			case 1: twoScore = calcAll();
+			break;
+			case 2: threeScore = calcAll();
+			break;
+			case 3: fourScore = calcAll();
+			break;
+			case 4: fiveScore = calcAll();
+			break;
+			case 5: sixScore = calcAll();
+			break;
+			case 6: tokScore = calcAll();
+			break;
+			case 7: fokScore = calcAll();
+			break;
+			case 8: fhScore = staticFHScore;
+			break;
+			case 9: smStraightScore = staticSmStraightScore;
+			break;
+			case 10: lgStraightScore = staticLgStraightScore;
+			break;
+			case 12: chanceScore = calcAll();
+			}
+		}
+		else
+		{
+			selectApplyJoker();
+		}
+		
+	}
+
+
+	private boolean isWhatzee() {
+
+		if(finalDice[0] == finalDice[1] && finalDice[1] == finalDice[2] &&
+				finalDice[2] == finalDice[3] && finalDice[3] == finalDice[4])
+		{
+			return true;
+		}
+		else
+		return false;
+	}
+
+
+	private int calcWhatzeeScore() {
+		
+		int tempScore = whatzeeScore;
+		
+		tempScore += 50;
+		
+		if(tempScore > 50)
+		{
+			whatzeeBonus += 100;
+		}
+		
+		return tempScore ;
+	}
+
+
+	private boolean isLgStraight() {
+
+		if (groups[0] == 1 && groups[1] == 1 && groups[2] == 1 && groups[3] == 1 && groups[4] == 1)
+		{
+			return true;
+		}
+		else if (groups[1] == 1 && groups[2] == 1 && groups[3] == 1 && groups[4] == 1 && groups[5] == 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+	private boolean isSmStraight() {
+		if (groups[0] >= 1 && groups[1] >= 1 && groups[2] >= 1 && groups[3] >= 1)
+		{
+			return true;
+		}
+		else if (groups[1] >= 1 && groups[2] >= 1 && groups[3] >= 1 && groups[4] >= 1)
+		{
+			return true;
+		}
+		else if (groups[2] >= 1 && groups[3] >= 1 && groups[4] >= 1 && groups[5] >= 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+
+
+	private void verifyApplicationChoice() {
+
+		System.out.println("");
+		System.out.println("You entered " + choice);
+		System.out.println("Do you want to apply your dice to: " + applications[choice] + " (Y/N)?");
+		System.out.println("");
+		
+		confirmChoice = Character.toUpperCase(input.next().charAt(0));
+		
+		if(confirmChoice == 'Y')
+		{
+				applyFinalDice();
+				resetVariables();
+				displayScore();
+		}
+		else
+		{
+			selectApplyFinalDice();
+		}
+		
+		
+		
+	}
+	
+	private void applyForfeitChoice() {
+
+			switch(choice)
+			{
+			case 0: forfeit0 = true;
+			break;
+			case 1: forfeit1 = true;
+			break;
+			case 2: forfeit2 = true;
+			break;
+			case 3: forfeit3 = true;
+			break;
+			case 4: forfeit4 = true;
+			break;
+			case 5: forfeit5 = true;
+			break;
+			case 6: forfeit6 = true;
+			break;
+			case 7: forfeit7 = true;
+			break;
+			case 8: forfeit8 = true;
+			break;
+			case 9: forfeit9 = true;
+			break;
+			case 10: forfeit10 = true;
+			break;
+			case 11: forfeit11 = true;
+			}
+		
+	}
+
+	private void selectScoreToForfeit() {
+
+		System.out.println("");
+		System.out.println("How do you want to apply your forfeit?");
+		System.out.println("Enter the value from the ENTER column to make your choice");
+		System.out.println("");
+		
+		System.out.println("ENTER | APPLY TO");
+		System.out.println("------------------------------");
+		
+		if(aceScore == 0 && forfeit0 == false)
+		{
+			System.out.println(" 0 \t" + applications[0]);
+		}
+		if(twoScore == 0 && forfeit1 == false)
+		{
+			System.out.println(" 1 \t" + applications[1]);
+		}
+		if(threeScore == 0 && forfeit2 == false)
+		{
+			System.out.println(" 2 \t" + applications[2]);
+		}
+		if(fourScore == 0 && forfeit3 == false)
+		{
+			System.out.println(" 3 \t" + applications[3]);
+		}
+		if(fiveScore == 0 && forfeit4 == false)
+		{
+			System.out.println(" 4 \t" + applications[4]);
+		}
+		if(sixScore == 0 && forfeit5 == false)
+		{
+			System.out.println(" 5 \t" + applications[5]);
+		}
+		if(tokScore == 0 && forfeit6 == false)
+		{
+			System.out.println(" 6 \t" + applications[6]);
+		}
+		if(fokScore == 0 && forfeit7 == false)
+		{
+			System.out.println(" 7 \t" + applications[7]);
+		}
+		if(fhScore == 0 && forfeit8 == false)
+		{
+			System.out.println(" 8 \t" + applications[8]);
+		}
+		if(smStraightScore == 0 && forfeit9 == false)
+		{
+			System.out.println(" 9 \t" + applications[9]);
+		}
+		if(lgStraightScore == 0 && forfeit10 == false)
+		{
+			System.out.println("10 \t" + applications[10]);
+		}
+		if(whatzeeScore == 0 && forfeit11 == false)
+		{
+			System.out.println("11 \t" + applications[11]);
+		}
+		
+		try
+		{
+		choice = input.nextInt();
+		}
+		finally
+		{
+			selectScoreToForfeit();
+		}
+		
+		if(choiceValid())
+		{
+			if(verifyForfeit())
+			{
+				applyForfeit();
+				
+			}
+			else
+			{
+				selectApplyFinalDice();
+			}
+				
+		}
+		else
+		{
+			selectApplyFinalDice();
+		}
+	}
+
+
+	private boolean earnedUpperBonus()
+	{
+		if(upperScore >= 63)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+
+	private void displayScore() {
+		upperScore = aceScore + twoScore + threeScore + fourScore
+					+ fiveScore + sixScore;
+		
+		lowerTotal = tokScore + fokScore + fhScore + smStraightScore
+				+ lgStraightScore + whatzeeScore + chanceScore + jokerScore;
+		
+		if(earnedUpperBonus())
+		{
+			upperBonus = staticUpperBonus;
+		}
+		
+		totalScore = upperScore + lowerTotal + upperBonus;
+		
+		System.out.println("");
+		System.out.println("Your Score");
+		System.out.println("Upper Section = " + upperScore);
+		System.out.println("Lower Section = " + lowerTotal);
+		System.out.println("Upper Bonus = " + upperBonus);
+		System.out.println("----------------------------------");
+		System.out.println("Total Score = " + totalScore);
+		System.out.println("");
+		
+	}
+	
+	private void applyForfeit() {
+		System.out.println("");
+		
+		switch(choice)
+		{
+		case 0: forfeit0 = true;
+		break;
+		case 1: forfeit1 = true;
+		break;
+		case 2: forfeit2 = true;
+		break;
+		case 3: forfeit3 = true;
+		break;
+		case 4: forfeit4 = true;
+		break;
+		case 5: forfeit5 = true;
+		break;
+		case 6: forfeit6 = true;
+		break;
+		case 7: forfeit7 = true;
+		break;
+		case 8: forfeit8 = true;
+		break;
+		case 9: forfeit9 = true;
+		break;
+		case 10: forfeit10 = true;
+		break;
+		case 11: forfeit11 = true;
+		break;
+
+		}
+		
+		System.out.println("");
+		System.out.println("You forfeited your score for " + applications[forfeitIndex]);
+		System.out.println("");
+		
+		displayScore();
+		resetVariables();
+		
+		if(rollsLeft()) {
+			rollDice();
+		}
+		else
+		{
+			endGame();
+		}
+		
+	}
+
+
+
+	private void endGame() {
+		// TODO Auto-generated method stub
+		System.out.println("");
+		System.out.println("GAME OVER");
+		
+		if(totalScore <= 100)
+		{
+			System.out.println("You'll do better next time.");
+		}
+		if(totalScore > 100 && totalScore <= 200)
+		{
+			System.out.println("Pretty good, but I'm sure you can do better.");
+		}
+		if(totalScore > 200 && totalScore <= 300)
+		{
+			System.out.println("Great game!");
+		}
+		if(totalScore > 300)
+		{
+			System.out.println("That was one for the record books!");
+		}
+		showScores();
+		games.selectGame();
+		input.close();
+	}
+
+
+	private void applyFinalDice() {
+		System.out.println("");
+		
+		switch(choice)
+		{
+		case 0: aceScore = groups[0] * 1;
+		break;
+		case 1: twoScore = groups[1] * 2;
+		break;
+		case 2: threeScore = groups[2] * 3;
+		break;
+		case 3: fourScore = groups[3] * 4;
+		break;
+		case 4: fiveScore = groups[4] * 5;
+		break;
+		case 5: sixScore = groups[5] * 6;
+		break;
+		case 6: tokScore = calcAll();
+		break;
+		case 7: fokScore = calcAll();
+		break;
+		case 8: fhScore = staticFHScore;
+		break;
+		case 9: smStraightScore = staticSmStraightScore;
+		break;
+		case 10: lgStraightScore = staticLgStraightScore;
+		break;
+		case 11: 
+			whatzeeScore = calcWhatzeeScore();
+			if(jokerScore > 0)
+				{
+				if(jokerScore/5 == 1)
+				{
+					aceScore = jokerScore;
+				}
+				if(jokerScore/5 == 2)
+				{
+					twoScore = jokerScore;
+				}
+				if(jokerScore/5 == 3)
+				{
+					threeScore = jokerScore;
+				}
+				if(jokerScore/5 == 4)
+				{
+					fourScore = jokerScore;
+				}
+				if(jokerScore/5 == 5)
+				{
+					fiveScore = jokerScore;
+				}
+				if(jokerScore/5 == 6)
+				{
+					sixScore = jokerScore;
+				}
+			}
+		break;
+		case 12: chanceScore = calcAll();
+		break;
+		case 13: selectApplyJoker();
+		}
+
+		System.out.println("You applied your final dice to " + applications[choice]);
+		
+		displayScore();
+		resetVariables();
+		
+		if(rollsLeft()) {
+			rollDice();
+		}
+		else
+		{
+			System.out.println("");
+			System.out.println("GAME OVER");
+			System.out.println("Great Game!");
+			games.selectGame();
+		}
+		
+	}
+
+
+	private void resetVariables() {
+		
+		numRolls = 0;
+		dieNumber = 0;
+		A = 0;
+		B = 0;
+		C = 0;
+		D = 0;
+		E = 0;
+		XA = 0;
+		XB = 0;
+		XC = 0;
+		XD = 0;
+		XE = 0;
+		KA = 0;
+		KB = 0;
+		KC = 0;
+		KD = 0;
+		KE = 0;
+		ones = 0;
+		twos = 0;
+		threes = 0;
+		fours = 0;
+		fives = 0;
+		sixes = 0;
+		potentialScore = 0;
+		choices = 0;
+		choice = 0;
+		
+	}
+
+
+	private boolean rollsLeft() {
+
+		if(aceScore == 0 && forfeit0 == false
+			|| (twoScore == 0 && forfeit1 == false)
+			|| (threeScore == 0 && forfeit2 == false)
+			|| (fourScore == 0 && forfeit3 == false)
+			|| (fiveScore == 0 && forfeit4 == false)
+			|| (sixScore == 0 && forfeit5 == false)
+			|| (tokScore == 0 && forfeit6 == false)
+			|| (fokScore == 0 && forfeit7 == false)
+			|| (fhScore == 0 && forfeit8 == false)
+			|| (smStraightScore == 0 && forfeit9 == false)
+			|| (lgStraightScore == 0 && forfeit10 == false)
+			|| (forfeit11 == false)
+			|| (chanceScore == 0 && forfeit12 == false)
+			)
+		{
+			return true;
+		}
+		else
+		return false;
+	}
+
+
+	private int calcAll() {
+		return finalDice[0] + finalDice[1] + finalDice[2] + finalDice[3] + finalDice[4];
+	}
+
+
+	private boolean isFourOfAKind() {
+		boolean itis = false;
+		
+		for(int i = 0; i < 6; i++)
+		{
+			if (groups[i] >= 4)
+			{
+				itis = true;
+			}
+		}
+		return itis;			
+	}
+	
+
+
+	private boolean isThreeOfAKind() {
+		
+		boolean itis = false;
+		
+		for(int i = 0; i < 6; i++)
+		{
+			if (groups[i] >= 3)
+			{
+				itis = true;
+			}
+		}
+		return itis;
+		
+	}
+
+
+	private void groupFinalDice() {
+
+		for (int i = 0; i < 5; i++) {
+			if(finalDice[i] == 1)
+			{
+				ones +=1;
+			}
+			if(finalDice[i] == 2)
+			{
+				twos +=1;
+			}
+			if(finalDice[i] == 3)
+			{
+				threes +=1;
+			}
+			if(finalDice[i] == 4)
+			{
+				fours +=1;
+			}
+			if(finalDice[i] == 5)
+			{
+				fives +=1;
+			}
+			if(finalDice[i] == 6)
+			{
+				sixes +=1;
+			}
+			
+		}
+		
+		//populate groups array
+		groups[0] = ones;
+		groups[1] = twos;
+		groups[2] = threes;
+		groups[3] = fours;
+		groups[4] = fives;
+		groups[5] = sixes;
+		
+/*		System.out.println("");
+		System.out.println("Your dice consist of the following groupings");
+		System.out.println("");
+		
+		for(int i = 0; i < 6; i++)
+		{
+			System.out.println((i+1) + "'s: " + groups[i]);
+		}*/
+
+	}
+
+
+	private boolean isFullHouse() {
+		
+		//loop through groups array to see if there is a value of 3 & 2
+
+			if(hasGroupOfThree() && hasGroupOfTwo())
+			{
+				return true;
+			}
+			else
+				return false;
+		
+	}
+
+
+	private boolean hasGroupOfTwo() {
+		if (groups[0] == 2 || groups[1] == 2 || groups[2] == 2 || groups[3] == 2 || groups[4] == 2 || groups[5] == 2)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+
+
+	private boolean hasGroupOfThree() {
+		if (groups[0] == 3 || groups[1] == 3 || groups[2] == 3 || groups[3] == 3 || groups[4] == 3 || groups[5] == 3)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+
+
+	private void chooseKeepers() {
+		System.out.println("Keep A (Y/N)?");
+		keepDie = Character.toUpperCase(input.next().charAt(0));
+		
+		if(keepDie == 'Y')
+		{
+			assignToXs('A');
+		}
+		else
+		{
+			XB = 0;
+		}
+		
+		System.out.println("Keep B (Y/N)?");
+		keepDie = Character.toUpperCase(input.next().charAt(0));
+		if(keepDie == 'Y')
+		{
+			assignToXs('B');
+		}
+		else
+		{
+			XB = 0;
+		}
+		
+		System.out.println("Keep C (Y/N)?");
+		keepDie = Character.toUpperCase(input.next().charAt(0));
+		if(keepDie == 'Y')
+		{
+			assignToXs('C');
+		}
+		else
+		{
+			XC = 0;
+		}
+		
+		System.out.println("Keep D (Y/N)?");
+		System.out.println("");
+		keepDie = Character.toUpperCase(input.next().charAt(0));
+		if(keepDie == 'Y')
+		{
+			assignToXs('D');
+		}
+		else
+		{
+			XD = 0;
+		}
+		
+		System.out.println("Keep E (Y/N)?");
+		keepDie = Character.toUpperCase(input.next().charAt(0));
+		if(keepDie == 'Y')
+		{
+			assignToXs('E');
+		}
+		else
+		{
+			XE = 0;
+		}
+		
+		showKeepers();
+			
+	}
+
+
+	private void assignToXs(char letter) {
+		 
+		switch(letter)
+		{
+		case 'A':
+			XA = A;
+			break;
+		case 'B':
+			XB = B;
+			break;
+		case 'C':
+			XC = C;
+			break;
+		case 'D':
+			XD = D;
+			break;
+		case 'E':
+			XE = E;
+			break;
+		default:
+				break;
+		}
+		
+	}
+
+
+	private void showKeepers() {
+
+		System.out.println("");
+		System.out.println("You have chosen to keep the following dice");
+		if(XA > 0) System.out.print(XA + "\t" );
+		if (XB > 0) System.out.print (XB + "\t" );
+		if (XC > 0) System.out.print (XC + "\t" );
+		if (XD > 0) System.out.print (XD + "\t" );
+		if (XE > 0) System.out.print (XE);
+		
+		System.out.println("");
+		System.out.println("Are you sure (Y/N)?");
+		areYouSure = Character.toUpperCase(input.next().charAt(0));
+
+		if(areYouSure == 'Y')
+		{
+			KA = XA;
+			KB = XB;
+			KC = XC;
+			KD = XD;
+			KE = XE;
+			
+			showFinalDice();
+		}
+		else
+		{
+			XA = 0;
+			XB = 0;
+			XC = 0;
+			XD = 0;
+			XE = 0;
+			
+			showDice();
+			
+		}
+		
+	}
+
+
+
+
+	private boolean wannaKeepAll() 
+	{
+		System.out.println("");
+		System.out.println("Wanna keep all your dice ('Y' or 'N')");
+		System.out.println("A\tB\tC\tD\tE");
+		System.out.println(A + "\t" + B + "\t" + C + "\t" + D + "\t" + E);
+		System.out.println("");
+		keepAll = Character.toUpperCase(input.next().charAt(0));
+		
+		if(keepAll == 'Y')
+		{
+			return true;
+		}
+		else
+		{
+		return false;
+		}
+		
+	}
+
+	private boolean wannaRoll() 
+	{
+		System.out.println("");
+		System.out.println("Ready to roll ('Y' or 'N')");
+		System.out.println("");
+		wannaRoll = Character.toUpperCase(input.next().charAt(0));
+		
+		if(wannaRoll == 'Y')
+		{
+			return true;
+		}
+		else
+		{
+		return false;
+		}
+		
+	}
+
+}

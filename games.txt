@@ -1,0 +1,76 @@
+package cyndisgames;
+import java.util.Scanner;
+
+public class games {
+	
+	public static void selectGame() {
+
+	Scanner input = new Scanner(System.in);
+	int gamenum = 0;
+	String[] gameList = {"Whatzee", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6"};
+	System.out.println("");
+	System.out.println("1: " + gameList[0]);
+	System.out.println("2: " + gameList[1]);
+	System.out.println("3: " + gameList[2]);
+	System.out.println("4: " + gameList[3]);
+	System.out.println("5: " + gameList[4]);
+	System.out.println("6: " + gameList[5]);
+	System.out.println("");
+	System.out.println("Please select a game from 1 to 6 or select 0 to exit the app: ");
+	
+	
+	gamenum = input.nextInt();
+	
+	if(gamenum == 0)
+	{
+		input.close();
+		System.exit(0);
+	}
+	else if (gamenum >= 1 && gamenum <= 6)
+	{
+		/*switch(gamenum) {
+
+		case 1: 
+			Whatzee w = new Whatzee();
+			gameTracker(w);
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		default:
+			break;
+		}*/
+		
+		//remove if's and uncomment switch once additional games are added
+		if(gamenum == 1)
+		{
+			Whatzee w = new Whatzee();
+		}
+		else
+		{
+			System.out.println("Game not currently available, please Game 1.");
+			selectGame();
+		}
+	}
+	else 
+	{
+		System.out.println("You must choose a number between 0 and 6");
+		selectGame();
+		
+	}
+	}
+
+/*	private static void gameTracker(Whatzee w) {
+		// TODO Auto-generated method stub
+		
+	}*/
+	
+
+}
